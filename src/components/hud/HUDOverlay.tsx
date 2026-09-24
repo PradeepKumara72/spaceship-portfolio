@@ -50,7 +50,7 @@ export default function HUDOverlay() {
 
   return (
     <>
-      {/* Fullscreen Dynamic Laser Conduit Overlay (Button එකේ සිට Command Deck Frame එකටම විහිදේ) */}
+      {/* Fullscreen Dynamic Laser Conduit Overlay (Desktop පමණි - Mobile හි screen clutter නොවීමට) */}
       {isTransmitting && (
         <div className="fixed inset-0 pointer-events-none z-30 hidden md:block">
           <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -73,7 +73,7 @@ export default function HUDOverlay() {
               </filter>
             </defs>
 
-            {/* Glowing Laser Beam Path: X: 11% Y: 29% (COMM LINK button) සිට X: 78% Y: 18% (Command Desk Frame Border) දක්වා */}
+            {/* Glowing Laser Beam Path */}
             <path
               d="M 11 29 C 30 29, 52 23, 78 18"
               fill="none"
@@ -108,13 +108,13 @@ export default function HUDOverlay() {
               />
             </path>
 
-            {/* Origin Signal Pulse (Over Communication Link Button) */}
+            {/* Origin Signal Pulse */}
             <circle cx="11" cy="29" r="1.2" fill="#10b981">
               <animate attributeName="r" values="0.8;2.2;0.8" dur="0.8s" repeatCount="indefinite" />
               <animate attributeName="opacity" values="1;0.2;1" dur="0.8s" repeatCount="indefinite" />
             </circle>
 
-            {/* Target Landing Pulse (Directly hitting Command Deck Frame Border) */}
+            {/* Target Landing Pulse */}
             <circle cx="78" cy="18" r="1.5" fill="#22d3ee">
               <animate attributeName="r" values="1;2.8;1" dur="0.8s" repeatCount="indefinite" />
               <animate attributeName="opacity" values="1;0.1;1" dur="0.8s" repeatCount="indefinite" />
@@ -123,56 +123,56 @@ export default function HUDOverlay() {
         </div>
       )}
 
-      <div className="relative z-10 flex flex-col justify-between min-h-screen p-6 sm:p-8 pointer-events-none text-slate-200">
+      <div className="relative z-10 flex flex-col justify-between min-h-screen p-3 sm:p-6 md:p-8 pointer-events-none text-slate-200">
         {/* Top Header Status & Controls */}
-        <header className="flex justify-between items-center border-b border-cyan-500/20 pb-4 bg-slate-950/40 backdrop-blur-sm -mx-6 -mt-6 px-6 pt-6">
-          <div className="flex items-center space-x-3">
-            <span className="h-2.5 w-2.5 rounded-full bg-cyan-400 animate-ping" />
-            <span className="font-mono text-xs sm:text-sm tracking-widest text-cyan-400">
+        <header className="flex justify-between items-center border-b border-cyan-500/20 pb-3 sm:pb-4 bg-slate-950/60 backdrop-blur-md -mx-3 -mt-3 sm:-mx-6 sm:-mt-6 md:-mx-8 md:-mt-8 px-4 sm:px-6 md:px-8 pt-3 sm:pt-6">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <span className="h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full bg-cyan-400 animate-ping" />
+            <span className="font-mono text-[11px] sm:text-xs md:text-sm tracking-widest text-cyan-400">
               SYS.STATUS // ACTIVE
             </span>
           </div>
-          <div className="pointer-events-auto flex items-center space-x-4 sm:space-x-6 font-mono text-xs text-slate-400">
-            <span>ORBIT: {currentView === "hero" ? "STABLE" : "ENGAGED"}</span>
+          <div className="pointer-events-auto flex items-center space-x-2 sm:space-x-4 md:space-x-6 font-mono text-[11px] sm:text-xs text-slate-400">
+            <span className="hidden xs:inline">ORBIT: {currentView === "hero" ? "STABLE" : "ENGAGED"}</span>
             <button
               onClick={handleCredentials}
               onMouseEnter={() => soundFX.playHover()}
-              className="flex items-center space-x-1.5 px-3 py-1 border border-cyan-500/40 bg-cyan-950/60 hover:bg-cyan-900/80 text-cyan-300 rounded transition-all cursor-pointer shadow-[0_0_10px_rgba(6,182,212,0.2)]"
+              className="flex items-center space-x-1 sm:space-x-1.5 px-2.5 py-1 border border-cyan-500/40 bg-cyan-950/70 hover:bg-cyan-900/90 text-cyan-300 rounded text-[10px] sm:text-xs transition-all cursor-pointer shadow-[0_0_10px_rgba(6,182,212,0.2)]"
             >
-              <Award className="w-3.5 h-3.5 text-cyan-400" />
+              <Award className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400" />
               <span>DOSSIER // SPECS</span>
             </button>
           </div>
         </header>
 
-        {/* Middle Area: Left Hero Box & Right Bridge Badge */}
-        <div className="relative flex flex-col md:flex-row justify-between items-start mt-4 mb-auto gap-6">
-          {/* Hero Section — Left Glass Box */}
+        {/* Middle Area: Hero Card & Bridge Feeds */}
+        <div className="relative flex flex-col md:flex-row justify-between items-start my-auto gap-4 sm:gap-6 py-2">
+          {/* Hero Section — Profile Box */}
           <main
-            className={`relative z-10 w-full max-w-xl p-5 rounded-lg border bg-slate-950/60 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.5)] transition-all duration-700 ${
+            className={`relative z-10 w-full max-w-xl p-4 sm:p-5 rounded-lg border bg-slate-950/75 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.6)] transition-all duration-700 ${
               isTransmitting
                 ? "border-emerald-500/50 shadow-[0_0_35px_rgba(16,185,129,0.25)]"
-                : "border-cyan-500/20"
-            } ${currentView === "projects" ? "opacity-20 translate-y-[-10px]" : "opacity-100 translate-y-0"}`}
+                : "border-cyan-500/30"
+            } ${currentView === "projects" ? "opacity-15 md:opacity-20 translate-y-[-8px] pointer-events-none" : "opacity-100 translate-y-0"}`}
           >
-            <div className="inline-block px-2.5 py-0.5 mb-1.5 border border-cyan-500/30 bg-cyan-950/60 rounded text-[10px] font-mono tracking-widest text-cyan-400">
+            <div className="inline-block px-2 py-0.5 mb-1.5 border border-cyan-500/30 bg-cyan-950/70 rounded text-[9px] sm:text-[10px] font-mono tracking-widest text-cyan-400">
               COMMANDER // {PROFILE_DATA.name.toUpperCase()}
             </div>
             
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white mb-1.5 whitespace-nowrap drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-tight text-white mb-1 drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]">
               {PROFILE_DATA.name}
             </h1>
 
-            <p className="text-cyan-300 font-mono text-xs sm:text-sm mb-1 whitespace-nowrap tracking-wide">
+            <p className="text-cyan-300 font-mono text-xs sm:text-sm mb-1 tracking-wide leading-snug">
               {PROFILE_DATA.title}
             </p>
 
-            <p className="text-slate-300 text-xs mb-4 whitespace-nowrap tracking-wide">
+            <p className="text-slate-300 text-[11px] sm:text-xs mb-3.5 tracking-wide leading-snug">
               {PROFILE_DATA.education.degree} — {PROFILE_DATA.education.institution}
             </p>
 
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3">
+            {/* Action Buttons (Mobile friendly responsive stack) */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
               {/* Button 1: COMMUNICATION LINK */}
               <a
                 href={whatsappUrl}
@@ -184,11 +184,11 @@ export default function HUDOverlay() {
                   setIsTransmitting(true);
                 }}
                 onMouseLeave={() => setIsTransmitting(false)}
-                className="pointer-events-auto cursor-pointer group flex items-center space-x-2 px-5 py-2 border border-emerald-500/60 bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 font-mono text-xs tracking-wider uppercase transition-all duration-300 rounded shadow-[0_0_25px_rgba(16,185,129,0.35)] hover:scale-105 active:scale-95 hover:border-emerald-400"
+                className="pointer-events-auto cursor-pointer group flex items-center justify-center space-x-2 px-4 py-2 border border-emerald-500/60 bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 font-mono text-[11px] sm:text-xs tracking-wider uppercase transition-all duration-300 rounded shadow-[0_0_25px_rgba(16,185,129,0.35)] active:scale-95 hover:border-emerald-400 text-center"
               >
                 <div className="relative flex items-center justify-center">
                   <span className="absolute -inset-1 rounded-full bg-emerald-400 opacity-40 animate-ping" />
-                  <MessageCircle className="w-4 h-4 text-emerald-400 relative z-10" />
+                  <MessageCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 relative z-10" />
                 </div>
                 <span className="font-semibold">COMMUNICATION LINK</span>
               </a>
@@ -197,38 +197,38 @@ export default function HUDOverlay() {
               <button
                 onClick={toggleView}
                 onMouseEnter={() => soundFX.playHover()}
-                className="pointer-events-auto cursor-pointer px-5 py-2 border border-cyan-500/50 bg-cyan-950/80 hover:bg-cyan-900 text-cyan-300 font-mono text-xs tracking-widest uppercase transition-all duration-300 rounded shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:scale-105 active:scale-95"
+                className="pointer-events-auto cursor-pointer px-4 py-2 border border-cyan-500/50 bg-cyan-950/80 hover:bg-cyan-900 text-cyan-300 font-mono text-[11px] sm:text-xs tracking-widest uppercase transition-all duration-300 rounded shadow-[0_0_20px_rgba(6,182,212,0.3)] active:scale-95 text-center"
               >
                 {currentView === "hero" ? "INITIALIZE SYSTEM" : "RETURN TO ORBIT"}
               </button>
             </div>
           </main>
 
-          {/* Commander Workstation Badge — Right Side */}
+          {/* Commander Workstation Badge — Mobile friendly compact view */}
           <div
             onClick={handleOpenBridge}
             onMouseEnter={() => soundFX.playHover()}
-            className={`relative z-10 pointer-events-auto cursor-pointer group p-3 rounded-lg border bg-slate-950/60 backdrop-blur-md transition-all duration-500 hover:scale-[1.02] ${
+            className={`relative z-10 pointer-events-auto cursor-pointer group p-2.5 sm:p-3 rounded-lg border bg-slate-950/70 backdrop-blur-md transition-all duration-500 w-full sm:w-auto ${
               isTransmitting
                 ? "border-emerald-400 shadow-[0_0_45px_rgba(16,185,129,0.55)] ring-2 ring-emerald-400/50"
                 : "border-cyan-500/30 hover:border-cyan-400 hover:shadow-[0_0_35px_rgba(6,182,212,0.4)]"
             }`}
           >
-            <div className="flex justify-between items-center text-[11px] font-mono mb-2">
-              <div className="flex items-center space-x-2">
+            <div className="flex justify-between items-center text-[10px] sm:text-[11px] font-mono mb-1.5">
+              <div className="flex items-center space-x-1.5">
                 <Radio
-                  className={`w-3.5 h-3.5 animate-pulse ${
+                  className={`w-3 h-3 sm:w-3.5 sm:h-3.5 animate-pulse ${
                     isTransmitting ? "text-emerald-400" : "text-cyan-400"
                   }`}
                 />
                 <span className={isTransmitting ? "text-emerald-300 font-bold" : "text-cyan-400"}>
-                  {isTransmitting ? "RECEIVING CARRIER SIGNAL..." : "COMMAND DECK // OPTICAL FEED"}
+                  {isTransmitting ? "CARRIER SIGNAL ACTIVE" : "COMMAND DECK FEED"}
                 </span>
               </div>
               <Maximize2 className="w-3 h-3 text-cyan-400 opacity-60 group-hover:opacity-100 transition-opacity" />
             </div>
 
-            <div className="relative w-64 sm:w-72 md:w-80 h-36 sm:h-40 rounded overflow-hidden border border-cyan-500/40 shadow-[inset_0_0_15px_rgba(6,182,212,0.3)]">
+            <div className="relative w-full sm:w-64 md:w-80 h-28 sm:h-36 md:h-40 rounded overflow-hidden border border-cyan-500/40 shadow-[inset_0_0_15px_rgba(6,182,212,0.3)]">
               <Image
                 src="/assets/commander-bridge.jpeg"
                 alt="Commander Bridge Console"
@@ -241,29 +241,29 @@ export default function HUDOverlay() {
                 }`}
               />
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/5 to-transparent pointer-events-none" />
-              <div className="absolute bottom-1.5 right-1.5 px-2 py-0.5 bg-black/80 border border-cyan-500/30 rounded text-[9px] font-mono text-cyan-300">
-                CLICK TO EXPAND
+              <div className="absolute bottom-1.5 right-1.5 px-1.5 py-0.5 bg-black/85 border border-cyan-500/30 rounded text-[8px] sm:text-[9px] font-mono text-cyan-300">
+                TAP TO EXPAND
               </div>
             </div>
           </div>
         </div>
 
         {/* Projects Sector Switcher Controls */}
-        <div className="pointer-events-auto flex items-center justify-center space-x-6 my-4 bg-slate-950/60 backdrop-blur-md px-6 py-2 rounded-full border border-cyan-500/20 mx-auto">
+        <div className="pointer-events-auto flex items-center justify-between sm:justify-center space-x-2 sm:space-x-6 my-2 bg-slate-950/75 backdrop-blur-md px-4 sm:px-6 py-1.5 sm:py-2 rounded-full border border-cyan-500/25 w-full sm:w-auto mx-auto max-w-sm">
           <button
             onClick={handlePrev}
             onMouseEnter={() => soundFX.playHover()}
-            className="flex items-center space-x-1 px-4 py-1.5 border border-cyan-500/30 bg-cyan-950/50 hover:bg-cyan-900/70 text-cyan-300 rounded font-mono text-xs tracking-wider transition-all cursor-pointer"
+            className="flex items-center space-x-1 px-3 py-1 sm:px-4 sm:py-1.5 border border-cyan-500/30 bg-cyan-950/60 hover:bg-cyan-900/80 text-cyan-300 rounded font-mono text-[10px] sm:text-xs tracking-wider transition-all cursor-pointer active:scale-95"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-3.5 h-3.5" />
             <span>PREV</span>
           </button>
 
           <div className="text-center font-mono">
-            <span className="text-xs text-cyan-400 tracking-widest block">
+            <span className="text-[10px] sm:text-xs text-cyan-400 tracking-widest block">
               SECTOR 0{projectPage + 1} / 02
             </span>
-            <span className="text-[10px] text-slate-300 tracking-wider">
+            <span className="text-[9px] sm:text-[10px] text-slate-300 tracking-wider block truncate max-w-[140px] sm:max-w-none">
               {projectPage === 0 ? "ENTERPRISE SYSTEMS" : "GENERATIVE AI MEDIA"}
             </span>
           </div>
@@ -271,15 +271,15 @@ export default function HUDOverlay() {
           <button
             onClick={handleNext}
             onMouseEnter={() => soundFX.playHover()}
-            className="flex items-center space-x-1 px-4 py-1.5 border border-cyan-500/30 bg-cyan-950/50 hover:bg-cyan-900/70 text-cyan-300 rounded font-mono text-xs tracking-wider transition-all cursor-pointer"
+            className="flex items-center space-x-1 px-3 py-1 sm:px-4 sm:py-1.5 border border-cyan-500/30 bg-cyan-950/60 hover:bg-cyan-900/80 text-cyan-300 rounded font-mono text-[10px] sm:text-xs tracking-wider transition-all cursor-pointer active:scale-95"
           >
             <span>NEXT</span>
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
         {/* Footer */}
-        <footer className="border-t border-cyan-500/20 pt-4 flex justify-between font-mono text-xs text-slate-400 bg-slate-950/40 backdrop-blur-sm -mx-6 -mb-6 px-6 pb-6">
+        <footer className="border-t border-cyan-500/20 pt-3 flex justify-between font-mono text-[10px] sm:text-xs text-slate-400 bg-slate-950/60 backdrop-blur-md -mx-3 -mb-3 sm:-mx-6 sm:-mb-6 md:-mx-8 md:-mb-8 px-4 sm:px-6 md:px-8 pb-3 sm:pb-6">
           <span>PORTFOLIO v2.0 // DEEP SPACE</span>
           <span>PILIYANDALA // SRI LANKA</span>
         </footer>
