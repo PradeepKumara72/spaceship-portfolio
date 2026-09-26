@@ -12,11 +12,11 @@ export interface Project {
 export const PROJECTS_DATA: Project[] = [
   {
     id: "proj-police-records",
-    title: "Police Crime & Geo-Location Tracking System",
+    title: "Criminal Intelligence & Geospatial Tracking Portal",
     category: "Enterprise System",
-    shortDesc: "Piliyandala Police station crime record indexing with geo-tagging capabilities.",
+    shortDesc: "Crime record indexing with geo-tagging capabilities.",
     fullDesc:
-      "A specialized desktop registry and crime mapping application engineered for Piliyandala Police Station. Features rapid citizen record retrieval, secure multi-attribute searching (Name, National ID, Mobile), and precise Google Maps geo-coordinate tagging for suspected illicit operations and narcotics hubs.",
+      "A specialized desktop registry and crime mapping application. Features rapid citizen record retrieval, secure multi-attribute searching (Name, National ID, Mobile), and precise Google Maps geo-coordinate tagging for suspected illicit operations and narcotics hubs.",
     features: [
       "Secure Multi-parameter indexing (NIC, Name, Phone Number)",
       "Interactive Record Modal: View, Edit, Print, and Admin-only Deletion",

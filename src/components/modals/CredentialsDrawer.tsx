@@ -1,17 +1,17 @@
 "use client";
 
-import { useCredentialsStore } from "@/hooks/useCredentialsStore";
+import { useModalStore } from "@/core/useModalStore";
 import { PROFILE_DATA } from "@/config/profile";
 import { soundFX } from "@/hooks/useSoundFX";
-import { Award, Cpu, GraduationCap, X, CheckCircle, Clock, FileCheck, ExternalLink, User, MessageSquareQuote, Star } from "lucide-react";
+import { Award, Cpu, GraduationCap, X, CheckCircle, Clock, FileCheck, ExternalLink, User } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
 export default function CredentialsDrawer() {
-  const { isOpen, closeDrawer } = useCredentialsStore();
+  const { isCredentialsOpen, closeCredentials } = useModalStore();
   const [imgError, setImgError] = useState(false);
 
-  if (!isOpen) return null;
+  if (!isCredentialsOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
@@ -31,9 +31,9 @@ export default function CredentialsDrawer() {
           <button
             onClick={() => {
               soundFX.playClick();
-              closeDrawer();
+              closeCredentials();
             }}
-            className="p-1.5 text-slate-400 hover:text-cyan-300 border border-transparent hover:border-cyan-500/30 rounded transition-colors cursor-pointer"
+            className="p-1.5 text-slate-400 hover:text-cyan-300 border border-transparent hover:border-cyan-500/30 rounded transition-colors cursor-pointer outline-none select-none [-webkit-tap-highlight-color:transparent]"
           >
             <X className="w-5 h-5" />
           </button>
@@ -144,42 +144,6 @@ export default function CredentialsDrawer() {
             ))}
           </div>
         </div>
-
-        {/* Verified Client Transmissions (Reviews) */}
-        {PROFILE_DATA.clientReviews && PROFILE_DATA.clientReviews.length > 0 && (
-          <div className="mb-6">
-            <div className="flex items-center space-x-2 text-xs font-mono uppercase tracking-wider text-emerald-400 mb-3">
-              <MessageSquareQuote className="w-4 h-4 text-emerald-400" />
-              <span>Verified Client Transmissions</span>
-            </div>
-            <div className="space-y-3">
-              {PROFILE_DATA.clientReviews.map((rev, idx) => (
-                <div
-                  key={idx}
-                  className="p-3.5 bg-slate-900/70 border border-emerald-500/30 rounded-lg space-y-2 relative"
-                >
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h4 className="text-xs font-semibold text-slate-100">{rev.organization}</h4>
-                      <p className="text-[10px] text-slate-400 font-mono">{rev.role}</p>
-                    </div>
-                    <div className="flex items-center space-x-0.5 text-amber-400">
-                      {[...Array(rev.rating)].map((_, i) => (
-                        <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
-                      ))}
-                    </div>
-                  </div>
-                  <p className="text-[11px] text-slate-300 italic leading-relaxed">
-                    &ldquo;{rev.feedback}&rdquo;
-                  </p>
-                  <div className="text-[9px] font-mono text-emerald-400/80 text-right">
-                    VERIFIED // {rev.date.toUpperCase()}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* AI Stack & Production Arsenal */}
         <div>

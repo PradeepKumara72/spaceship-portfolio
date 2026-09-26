@@ -1,35 +1,27 @@
 "use client";
 
-import { useEffect } from "react";
-import { useThree } from "@react-three/fiber";
-import gsap from "gsap";
-import { useNavigationStore } from "@/hooks/useCameraRig";
+import { useFrame } from "@react-three/fiber";
+import { useNavigationStore } from "@/core/useNavigationStore";
+import * as THREE from "three";
+import { useRef } from "react";
 
 export default function CameraRig() {
-  const { camera } = useThree();
   const currentView = useNavigationStore((state) => state.currentView);
+  const targetDistance = useRef(7.5);
 
-  useEffect(() => {
-    if (currentView === "projects") {
-      // Projects View එකට කැමරාව Zoom කර ඉදිරියට ගෙන යාම
-      gsap.to(camera.position, {
-        x: 0,
-        y: 0,
-        z: 2.8,
-        duration: 2,
-        ease: "power3.inOut",
-      });
-    } else {
-      // නැවත Hero View එකට කැමරාව රැගෙන ඒම
-      gsap.to(camera.position, {
-        x: 0,
-        y: 0,
-        z: 5,
-        duration: 2,
-        ease: "power3.inOut",
-      });
+  useFrame((state) => {
+    // Hero view එකේදී කැමරා දුර 7.5, Projects view එකේදී කාඩ්පත් වෙත සමීපව 5.2
+    targetDistance.current = currentView === "hero" ? 7.5 : 5.2;
+
+    // කැමරාවේ දිශාවට බාධා නොකර දුර (radius) පමණක් සුමටව වෙනස් කරයි
+    const currentPos = state.camera.position;
+    const currentDist = currentPos.length();
+    const newDist = THREE.MathUtils.lerp(currentDist, targetDistance.current, 0.05);
+
+    if (currentDist > 0.001) {
+      currentPos.multiplyScalar(newDist / currentDist);
     }
-  }, [currentView, camera]);
+  });
 
   return null;
 }
